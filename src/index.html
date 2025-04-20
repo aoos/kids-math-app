@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kids-math-app</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Kids Math App!</h1>
+        <p>Select a math subject to get started:</p>
+    </header>
+    <main>
+        <div class="subject-selection">
+            <button onclick="location.href='pages/addition.html'">Addition</button>
+            <button onclick="location.href='pages/subtraction.html'">Subtraction</button>
+            <button onclick="location.href='pages/multiplication.html'">Multiplication</button>
+            <button onclick="location.href='pages/division.html'">Division</button>
+            <button onclick="location.href='pages/numberlines.html'">Number Lines</button>
+        </div>
+    </main>
+    <!-- Load scripts in correct order -->
+    <script src="assets/js/storage-utils.js"></script>
+    <!-- Other scripts -->
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

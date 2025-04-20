@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Lines</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/numberlines.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Number Lines Game</h1>
+        
+        <div class="settings">
+            <div class="range-controls">
+                <label>Min: <input type="number" id="min-value" value="0"></label>
+                <label>Max: <input type="number" id="max-value" value="100"></label>
+            </div>
+            <div class="option-controls">
+                <label><input type="checkbox" id="randomize"> Randomize after each guess</label>
+                <label><input type="checkbox" id="decimals"> Use decimals</label>
+            </div>
+        </div>
+        
+        <div id="game-container">
+            <h2>Find where <span id="target-number">50</span> goes on the line</h2>
+            
+            <div id="number-line-container">
+                <div id="number-line-labels">
+                    <span id="min-label">0</span>
+                    <span id="max-label">100</span>
+                </div>
+                <div id="number-line"></div>
+                <div id="tick-marks"></div>
+                <div id="user-marker" class="marker"></div>
+                <div id="correct-marker" class="marker"></div>
+            </div>
+            
+            <div id="results" style="display: none;">
+                <div id="stars"></div>
+                <div id="accuracy"></div>
+            </div>
+            
+            <button id="next-number">Next Number</button>
+            <button id="home-button" onclick="location.href='../index.html'">Return to Home</button>
+        </div>
+    </div>
+    
+    <script src="../assets/js/numberlines.js"></script>
+</body>
+</html>

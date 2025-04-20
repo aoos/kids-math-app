@@ -1,0 +1,24 @@
+{
+  "name": "kids-math-app",
+  "version": "1.0.0",
+  "description": "A web-based application for kids to practice simple math problems.",
+  "main": "src/assets/js/app.js",
+  "scripts": {
+    "start": "live-server src",
+    "dev": "npx live-server src",
+    "build": "echo 'Build step not defined'"
+  },
+  "homepage": "https://yourusername.github.io/kids-math-app",
+  "keywords": [
+    "math",
+    "education",
+    "kids",
+    "web"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  }
+}
