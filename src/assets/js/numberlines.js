@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const randomizeCheckbox = document.getElementById('randomize');
     const decimalsCheckbox = document.getElementById('decimals');
     const negativesCheckbox = document.getElementById('negatives');
+    const largeNumbersCheckbox = document.getElementById('large-numbers');
     const targetNumberElement = document.getElementById('target-number');
     const numberLine = document.getElementById('number-line');
     const userMarker = document.getElementById('user-marker');
@@ -81,6 +82,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     decimalsCheckbox.addEventListener('change', generateNewTarget);
+    largeNumbersCheckbox.addEventListener('change', () => {
+        if (largeNumbersCheckbox.checked) {
+            // Set to large number range when checked
+            setLargeNumbersRange();
+        } else {
+            // Reset to standard range when unchecked, respecting negatives setting
+            const defaultMin = negativesCheckbox.checked ? -100 : 0;
+            minInput.value = defaultMin;
+            maxInput.value = defaultMin + 100;
+            minValue = defaultMin;
+            maxValue = defaultMin + 100;
+        }
+        generateNewTarget();
+        drawTickMarks(hasGuessed);
+    });
     
     numberLine.addEventListener('click', (e) => {
         if (hasGuessed) return;
@@ -140,12 +156,24 @@ document.addEventListener('DOMContentLoaded', () => {
             targetNumberElement.textContent = formatNumber(targetNumber);
         } else {
             targetNumber = Math.floor(minValue + Math.random() * (range + 1));
-            targetNumberElement.textContent = targetNumber;
+            targetNumberElement.textContent = formatLargeNumber(targetNumber);
         }
     }
     
     function formatNumber(num) {
-        return decimalsCheckbox.checked ? num.toFixed(1) : Math.floor(num);
+        if (decimalsCheckbox.checked) {
+            return num.toFixed(1);
+        } else {
+            return Math.floor(num);
+        }
+    }
+    
+    function formatLargeNumber(num) {
+        // Format large numbers with commas for readability
+        if (largeNumbersCheckbox.checked && Math.abs(num) >= 1000) {
+            return num.toLocaleString();
+        }
+        return num;
     }
     
     function drawTickMarks(showTicks = false) {
@@ -235,17 +263,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function randomizeRange() {
-        // Generate random range respecting the negatives checkbox
-        let newMin;
-        if (negativesCheckbox.checked) {
-            // Allow negative minimum values if negatives checkbox is checked
-            newMin = Math.floor(Math.random() * 200) - 100;
+        let newMin, rangeSize;
+        
+        if (largeNumbersCheckbox.checked) {
+            // Generate large numbers within 1 order of magnitude - toned down ranges
+            const magnitudes = [
+                { min: 1_000, max: 10_000 },        // thousands
+                { min: 10_000, max: 100_000 },      // tens of thousands
+                { min: 100_000, max: 1_000_000 }    // hundreds of thousands
+            ];
+            
+            // Pick a random magnitude
+            const magnitude = magnitudes[Math.floor(Math.random() * magnitudes.length)];
+            
+            // Generate min value within the selected magnitude
+            newMin = Math.floor(Math.random() * (magnitude.max - magnitude.min)) + magnitude.min;
+            
+            // Stay within 1 order of magnitude
+            rangeSize = Math.floor((Math.random() * 0.9 + 0.1) * (magnitude.max - newMin));
+            
+            // Allow negatives if the checkbox is checked
+            if (negativesCheckbox.checked && Math.random() > 0.5) {
+                newMin = -newMin;
+            }
         } else {
-            // Only positive minimum values if negatives checkbox is not checked
-            newMin = Math.floor(Math.random() * 100);
+            // Standard range generation
+            if (negativesCheckbox.checked) {
+                newMin = Math.floor(Math.random() * 200) - 100;
+            } else {
+                newMin = Math.floor(Math.random() * 100);
+            }
+            rangeSize = Math.floor(Math.random() * 180) + 20; // Range between 20 and 200
         }
         
-        const rangeSize = Math.floor(Math.random() * 180) + 20; // Range between 20 and 200
         const newMax = newMin + rangeSize;
         
         minInput.value = newMin;
@@ -253,5 +303,23 @@ document.addEventListener('DOMContentLoaded', () => {
         minValue = newMin;
         maxValue = newMax;
         drawTickMarks(hasGuessed);
+    }
+    
+    function setLargeNumbersRange() {
+        // Set a default large number range - toned down to more moderate values
+        const magnitudes = [1_000, 10_000, 100_000]; // thousands to hundreds of thousands
+        const magnitude = magnitudes[Math.floor(Math.random() * magnitudes.length)];
+        
+        let newMin = magnitude;
+        let rangeSize = Math.floor(magnitude * 0.9); // Range within same order of magnitude
+        
+        if (negativesCheckbox.checked && Math.random() > 0.5) {
+            newMin = -newMin;
+        }
+        
+        minInput.value = newMin;
+        maxInput.value = newMin + rangeSize;
+        minValue = newMin;
+        maxValue = newMin + rangeSize;
     }
 });

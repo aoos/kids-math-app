@@ -12,6 +12,15 @@
     margin-bottom: 10px;
 }
 
+/* Improve option controls layout for the additional option */
+.option-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin: 10px 0;
+}
+
 #number-line-container {
     position: relative;
     margin: 40px 0;
