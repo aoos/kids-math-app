@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rounding Numbers</title>
     <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/framework/game-framework.css">
     <link rel="stylesheet" href="../assets/css/rounding.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
@@ -27,16 +28,16 @@
             
             <div class="input-container">
                 <div class="smart-input-wrapper">
-                    <input type="number" id="user-answer" placeholder="Enter" autocomplete="off">
+                    <input type="number" id="user-answer" placeholder="#" autocomplete="off">
                     <span id="trailing-zeros">000</span>
                 </div>
-                <button id="check-answer">Check</button>
-                <button id="next-number" style="display: none;">Next</button>
+                <button id="check-answer" class="game-button secondary">Check</button>
+                <button id="next-number" class="game-button" style="display: none;">Next</button>
             </div>
             
-            <div id="feedback" class="feedback"></div>
+            <div id="rounding-feedback" class="feedback"></div>
 
-            <!-- Updated number line visualization -->
+            <!-- Number line visualization -->
             <div id="number-line-visualization" class="number-line-visualization" style="display: none;">
                 <div class="number-line">
                     <!-- Original number marker (above the line) -->
@@ -91,6 +92,6 @@
         </div>
     </div>
     
-    <script src="../assets/js/rounding.js"></script>
+    <script type="module" src="../assets/js/framework/game-loader.js"></script>
 </body>
 </html>

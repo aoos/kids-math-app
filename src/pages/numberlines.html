@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Number Lines</title>
     <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/framework/game-framework.css">
     <link rel="stylesheet" href="../assets/css/numberlines.css">
-    <!-- Add Font Awesome for the home icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
@@ -30,10 +30,10 @@
         </div>
         
         <div id="game-container">
-            <!-- Revised layout for prompt and next button -->
+            <!-- Prompt and next button -->
             <div class="prompt-container">
                 <h2>Where does this number go? <span id="target-number">50</span></h2>
-                <button id="next-number" class="next-button">Next Number</button>
+                <button id="next-number" class="game-button">Next Number</button>
             </div>
             
             <div id="number-line-container">
@@ -51,9 +51,11 @@
                 <div id="stars"></div>
                 <div id="accuracy"></div>
             </div>
+            
+            <div id="numberlines-feedback" class="feedback"></div>
         </div>
     </div>
     
-    <script src="../assets/js/numberlines.js"></script>
+    <script type="module" src="../assets/js/framework/game-loader.js"></script>
 </body>
 </html>

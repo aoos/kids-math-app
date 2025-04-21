@@ -1,0 +1,151 @@
+/* Game Framework CSS */
+
+/* Common Variables */
+:root {
+    --primary-color: #28a745;
+    --secondary-color: #007bff;
+    --accent-color: #17a2b8;
+    --error-color: #dc3545;
+    --success-color: #28a745;
+    --background-color: #f8f9fa;
+    --border-color: #ccc;
+    --text-color: #333;
+    --text-muted: #666;
+}
+
+/* Game Container */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Home Icon */
+.home-icon-container {
+    position: relative;
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.home-icon {
+    font-size: 24px;
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.home-icon:hover {
+    color: #138496;
+}
+
+/* Stats Container */
+.stats-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: var(--background-color);
+    border-radius: 8px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.stat-box {
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.stat-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.stat-title {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+/* Feedback Styling */
+.feedback {
+    text-align: center;
+    font-size: 1.2rem;
+    min-height: 40px;
+    padding: 10px;
+}
+
+.feedback.correct {
+    color: var(--success-color);
+    font-weight: bold;
+}
+
+.feedback.incorrect {
+    color: var(--error-color);
+    font-weight: bold;
+}
+
+/* Button Styling */
+.game-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.game-button:hover {
+    background-color: #218838;
+}
+
+.game-button.secondary {
+    background-color: var(--secondary-color);
+}
+
+.game-button.secondary:hover {
+    background-color: #0069d9;
+}
+
+/* Difficulty Controls */
+.difficulty-controls {
+    background-color: var(--background-color);
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+.difficulty-controls h3 {
+    margin-top: 0;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.difficulty-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.difficulty-options label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
