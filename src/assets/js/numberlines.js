@@ -23,6 +23,27 @@ document.addEventListener('DOMContentLoaded', () => {
     let targetNumber = 0;
     let hasGuessed = false;
     
+    // Stats tracking variables
+    let totalGuesses = 0;
+    let totalPercentageOff = 0;
+    let closestGuessPercentage = 100; // Initialize with worst possible value
+    
+    // Create stats display element
+    const statsDiv = document.createElement('div');
+    statsDiv.className = 'stats-container';
+    statsDiv.innerHTML = `
+        <h3>Your Statistics</h3>
+        <div id="guesses-count">Number of guesses: 0</div>
+        <div id="average-percentage">Average % off: 0%</div>
+        <div id="closest-guess">Closest guess: N/A</div>
+    `;
+    document.querySelector('.container').appendChild(statsDiv);
+    
+    // Get references to stats elements
+    const guessesCountElement = document.getElementById('guesses-count');
+    const averagePercentageElement = document.getElementById('average-percentage');
+    const closestGuessElement = document.getElementById('closest-guess');
+    
     // Initialize game
     generateNewTarget();
     updateLabels();
@@ -77,7 +98,14 @@ document.addEventListener('DOMContentLoaded', () => {
         drawTickMarks(true);
         
         // Calculate accuracy and show results
-        showResults(percentage, correctPercentage);
+        const percentageDifference = Math.abs(percentage - correctPercentage) * 100;
+        showResults(percentage, correctPercentage, percentageDifference);
+        
+        // Update stats
+        totalGuesses++;
+        totalPercentageOff += percentageDifference;
+        closestGuessPercentage = Math.min(closestGuessPercentage, percentageDifference);
+        updateStats();
         
         hasGuessed = true;
     });
@@ -152,9 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    function showResults(userPercentage, correctPercentage) {
-        const percentageDifference = Math.abs(userPercentage - correctPercentage) * 100;
-        
+    function showResults(userPercentage, correctPercentage, percentageDifference) {
         // Determine number of stars
         let stars = '';
         let message = '';
@@ -186,6 +212,12 @@ document.addEventListener('DOMContentLoaded', () => {
             userMarker.classList.remove('marker-animation');
             correctMarker.classList.remove('marker-animation');
         }, 500);
+    }
+    
+    function updateStats() {
+        guessesCountElement.textContent = `Number of guesses: ${totalGuesses}`;
+        averagePercentageElement.textContent = `Average % off: ${(totalPercentageOff / totalGuesses).toFixed(1)}%`;
+        closestGuessElement.textContent = `Closest guess: ${closestGuessPercentage.toFixed(1)}%`;
     }
     
     function resetGame() {

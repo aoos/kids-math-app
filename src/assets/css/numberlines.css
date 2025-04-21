@@ -142,3 +142,29 @@
 input[type="number"] {
     width: 60px;
 }
+
+/* Statistics display styles */
+.stats-container {
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #f0f8ff;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+}
+
+.stats-container h3 {
+    margin-top: 0;
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#guesses-count, #average-percentage, #closest-guess {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* Add a subtle line between stats and game */
+.stats-container {
+    border-top: 1px dashed #ccc;
+}
