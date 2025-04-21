@@ -104,11 +104,11 @@
     color: #333;
 }
 
-/* Home icon styling */
+/* Home icon styling updated for inside the game container */
 .home-icon-container {
-    position: absolute;
-    top: 15px;
-    left: 15px;
+    position: relative;
+    text-align: left;
+    margin-bottom: 15px;
 }
 
 .home-icon {
