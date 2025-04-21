@@ -129,18 +129,25 @@ document.addEventListener('DOMContentLoaded', () => {
             tick.className = 'tick-mark';
             tick.style.left = `${i * 10}%`;
             
-            // Add labels for the middle tick and quarter marks
+            // Add labels for all tick marks
+            const label = document.createElement('div');
+            label.className = 'tick-label';
+            
+            // Calculate the value at this position
+            const value = minValue + (maxValue - minValue) * (i / 10);
+            label.textContent = formatNumber(value);
+            
+            // Add appropriate styling based on position
             if (i === 5) {
-                const label = document.createElement('div');
-                label.className = 'tick-label';
-                const middleValue = minValue + (maxValue - minValue) * 0.5;
-                label.textContent = formatNumber(middleValue);
-                tick.appendChild(label);
                 tick.classList.add('major-tick');
             } else if (i === 2 || i === 7) {
                 tick.classList.add('medium-tick');
+                label.classList.add('medium-label');
+            } else {
+                label.classList.add('smaller-label');
             }
             
+            tick.appendChild(label);
             tickContainer.appendChild(tick);
         }
     }

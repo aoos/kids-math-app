@@ -50,6 +50,15 @@
     color: #555;
 }
 
+.medium-label {
+    font-size: 13px;
+}
+
+.smaller-label {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
 #number-line {
     height: 8px;
     background-color: #333;
