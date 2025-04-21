@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, width=device-width, initial-scale=1.0">
+    <title>Rounding Numbers</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/rounding.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Home icon in top-left -->
+        <div class="home-icon-container">
+            <a href="../index.html" class="home-icon" title="Return to Home">
+                <i class="fas fa-home"></i>
+            </a>
+        </div>
+        
+        <h1>Rounding Numbers Game</h1>
+        
+        <div class="game-container">
+            <div class="number-display">
+                <h2>Round this number: <span id="target-number">3487</span></h2>
+            </div>
+            
+            <div class="input-container">
+                <input type="number" id="user-answer" placeholder="Enter rounded number" autocomplete="off">
+                <button id="check-answer">Check</button>
+                <button id="next-number">Next Number</button>
+            </div>
+            
+            <div id="feedback" class="feedback"></div>
+            
+            <div class="stats-container">
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-title">Questions</div>
+                        <div id="questions-count" class="stat-value">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-title">Correct</div>
+                        <div id="correct-count" class="stat-value">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-title">Accuracy</div>
+                        <div id="accuracy-percentage" class="stat-value">0%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="difficulty-controls">
+                <h3>Difficulty</h3>
+                <div class="difficulty-options">
+                    <label><input type="checkbox" id="double-digits" checked> 2 digits</label>
+                    <label><input type="checkbox" id="triple-digits" checked> 3 digits</label>
+                    <label><input type="checkbox" id="four-digits" checked> 4 digits</label>
+                    <label><input type="checkbox" id="five-digits" checked> 5 digits</label>
+                    <label><input type="checkbox" id="six-digits" checked> 6 digits</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../assets/js/rounding.js"></script>
+</body>
+</html>
