@@ -276,24 +276,52 @@ document.addEventListener('DOMContentLoaded', () => {
             // Pick a random magnitude
             const magnitude = magnitudes[Math.floor(Math.random() * magnitudes.length)];
             
-            // Generate min value within the selected magnitude
-            newMin = Math.floor(Math.random() * (magnitude.max - magnitude.min)) + magnitude.min;
+            // Generate min value as a round number with 1-2 significant digits
+            const significantDigits = Math.random() < 0.5 ? 1 : 2;
+            const baseNumber = significantDigits === 1 ? 
+                (Math.floor(Math.random() * 9) + 1) : 
+                (Math.floor(Math.random() * 90) + 10);
             
-            // Stay within 1 order of magnitude
-            rangeSize = Math.floor((Math.random() * 0.9 + 0.1) * (magnitude.max - newMin));
+            // Calculate the order of magnitude
+            const orderMagnitude = Math.floor(Math.log10(magnitude.min));
+            
+            // Create the rounded min value
+            newMin = baseNumber * Math.pow(10, orderMagnitude - (significantDigits - 1));
+            
+            // Create a round range size
+            const rangeSigDigits = Math.random() < 0.5 ? 1 : 2;
+            const rangeBase = rangeSigDigits === 1 ? 
+                (Math.floor(Math.random() * 9) + 1) : 
+                (Math.floor(Math.random() * 90) + 10);
+                
+            rangeSize = rangeBase * Math.pow(10, orderMagnitude - (rangeSigDigits - 1));
+            
+            // Ensure range isn't too small or too large
+            if (rangeSize < magnitude.min * 0.1) {
+                rangeSize = magnitude.min * 0.1;
+            } else if (rangeSize > magnitude.max * 0.9) {
+                rangeSize = magnitude.max * 0.9;
+            }
             
             // Allow negatives if the checkbox is checked
             if (negativesCheckbox.checked && Math.random() > 0.5) {
                 newMin = -newMin;
             }
         } else {
-            // Standard range generation
-            if (negativesCheckbox.checked) {
-                newMin = Math.floor(Math.random() * 200) - 100;
+            // Standard range generation with round numbers
+            const baseMin = Math.floor(Math.random() * 9) + 1; // 1-9
+            const baseMax = baseMin + Math.floor(Math.random() * 9) + 1; // baseMin + (1-9)
+            
+            // Determine multiplier (10 or 100)
+            const multiplier = Math.random() < 0.7 ? 10 : 100;
+            
+            if (negativesCheckbox.checked && Math.random() > 0.5) {
+                newMin = -baseMin * multiplier;
             } else {
-                newMin = Math.floor(Math.random() * 100);
+                newMin = baseMin * multiplier;
             }
-            rangeSize = Math.floor(Math.random() * 180) + 20; // Range between 20 and 200
+            
+            rangeSize = (baseMax - baseMin) * multiplier;
         }
         
         const newMax = newMin + rangeSize;
@@ -306,12 +334,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function setLargeNumbersRange() {
-        // Set a default large number range - toned down to more moderate values
-        const magnitudes = [1_000, 10_000, 100_000]; // thousands to hundreds of thousands
-        const magnitude = magnitudes[Math.floor(Math.random() * magnitudes.length)];
+        // Set a default large number range with round numbers
+        const magnitudeValues = [1_000, 10_000, 100_000]; // thousands to hundreds of thousands
+        const magnitude = magnitudeValues[Math.floor(Math.random() * magnitudeValues.length)];
         
-        let newMin = magnitude;
-        let rangeSize = Math.floor(magnitude * 0.9); // Range within same order of magnitude
+        // Create a round number with 1-2 significant digits
+        const significantDigits = Math.random() < 0.5 ? 1 : 2;
+        const baseNumber = significantDigits === 1 ? 
+            (Math.floor(Math.random() * 9) + 1) : 
+            (Math.floor(Math.random() * 90) + 10);
+        
+        // Calculate the order of magnitude
+        const orderMagnitude = Math.floor(Math.log10(magnitude));
+        
+        // Create the rounded min value
+        let newMin = baseNumber * Math.pow(10, orderMagnitude - (significantDigits - 1));
+        
+        // Create a round range size with 1-2 significant digits
+        const rangeSigDigits = Math.random() < 0.5 ? 1 : 2;
+        const rangeBase = rangeSigDigits === 1 ? 
+            (Math.floor(Math.random() * 9) + 1) : 
+            (Math.floor(Math.random() * 90) + 10);
+            
+        const rangeSize = rangeBase * Math.pow(10, orderMagnitude - (rangeSigDigits - 1));
         
         if (negativesCheckbox.checked && Math.random() > 0.5) {
             newMin = -newMin;

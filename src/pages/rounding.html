@@ -26,7 +26,10 @@
             </div>
             
             <div class="input-container">
-                <input type="number" id="user-answer" placeholder="Enter number" autocomplete="off">
+                <div class="smart-input-wrapper">
+                    <input type="number" id="user-answer" placeholder="Enter" autocomplete="off">
+                    <span id="trailing-zeros">000</span>
+                </div>
                 <button id="check-answer">Check</button>
                 <button id="next-number" style="display: none;">Next</button>
             </div>

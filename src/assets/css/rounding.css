@@ -227,3 +227,44 @@
 #correct-diff {
     color: #28a745;
 }
+
+/* Smart input styling */
+.smart-input-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    background-color: transparent;
+    padding: 0;
+}
+
+.smart-input-wrapper input {
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 1.2rem;
+    width: auto;
+    text-align: right;
+    background: #fff;
+}
+
+.smart-input-wrapper input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+#trailing-zeros {
+    font-size: 1.2rem;
+    color: #888;
+    margin-left: 2px;
+    padding: 10px 0;
+}
+
+/* Remove default number input arrows */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}

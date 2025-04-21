@@ -21,10 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let correctAnswer = 0;
     let questionsCount = 0;
     let correctCount = 0;
+    let expectedSignificantDigits = 0;
+    let trailingZerosCount = 0;
     
     // Initialize the game
     generateNewNumber();
     userAnswerInput.focus();
+    
+    // Add event listener for input to update as user types
+    userAnswerInput.addEventListener('input', updateTrailingZeros);
     
     // Event listeners
     checkAnswerButton.addEventListener('click', () => {
@@ -101,6 +106,17 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Calculate the correct rounded answer
         correctAnswer = calculateRoundedAnswer(currentNumber, numDigits);
+        
+        // Calculate how many significant digits we expect and how many zeros to display
+        expectedSignificantDigits = (numDigits <= 3) ? 1 : 2;
+        trailingZerosCount = numDigits - expectedSignificantDigits;
+        
+        // Update trailing zeros display
+        updateTrailingZerosDisplay();
+        
+        // Update input field size based on expected digits
+        userAnswerInput.setAttribute('placeholder', expectedSignificantDigits === 1 ? 'X' : 'XX');
+        userAnswerInput.style.width = (expectedSignificantDigits * 20) + 'px';
     }
     
     function calculateRoundedAnswer(number, numDigits) {
@@ -115,15 +131,31 @@ document.addEventListener('DOMContentLoaded', () => {
         return Math.round(number / roundToDigit) * roundToDigit;
     }
     
+    function updateTrailingZerosDisplay() {
+        const trailingZerosElement = document.getElementById('trailing-zeros');
+        trailingZerosElement.textContent = '0'.repeat(trailingZerosCount);
+    }
+    
+    function updateTrailingZeros() {
+        // If user enters more digits than expected, trim it
+        if (userAnswerInput.value.length > expectedSignificantDigits) {
+            userAnswerInput.value = userAnswerInput.value.slice(0, expectedSignificantDigits);
+        }
+    }
+    
     function checkAnswer() {
-        const userAnswer = parseInt(userAnswerInput.value);
+        // Get the significant digits entered by the user
+        const userSignificantDigits = userAnswerInput.value.trim();
         
         // Validate input
-        if (isNaN(userAnswer)) {
+        if (!userSignificantDigits || isNaN(parseInt(userSignificantDigits))) {
             feedbackElement.textContent = 'Please enter a valid number.';
             feedbackElement.className = 'feedback';
             return;
         }
+        
+        // Convert to full answer by adding zeros
+        const userAnswer = parseInt(userSignificantDigits) * Math.pow(10, trailingZerosCount);
         
         // Increment questions count
         questionsCount++;
@@ -170,15 +202,30 @@ document.addEventListener('DOMContentLoaded', () => {
         guessDiffEl.textContent = `(${guessDiff.toLocaleString()})`;
         correctDiffEl.textContent = `(${correctDiff.toLocaleString()})`;
         
-        // Calculate positions for the markers
-        const min = Math.min(originalNumber, userGuess, correctAnswer) * 0.8;
-        const max = Math.max(originalNumber, userGuess, correctAnswer) * 1.2;
-        const range = max - min;
+        // Find min and max values
+        const minValue = Math.min(originalNumber, userGuess, correctAnswer);
+        const maxValue = Math.max(originalNumber, userGuess, correctAnswer);
         
-        // Position the markers
-        const originalPos = ((originalNumber - min) / range) * 100;
-        const guessPos = ((userGuess - min) / range) * 100;
-        const correctPos = ((correctAnswer - min) / range) * 100;
+        // Ensure proper spacing by extending the range
+        let rangeBuffer;
+        
+        // For numbers that are very close, create a more significant buffer
+        if (maxValue - minValue < maxValue * 0.1) {
+            // If range is less than 10% of the max value, extend it to at least 20% of max
+            rangeBuffer = maxValue * 0.1;
+        } else {
+            // Otherwise, add 10% padding on each side
+            rangeBuffer = (maxValue - minValue) * 0.1;
+        }
+        
+        const displayMin = Math.max(0, minValue - rangeBuffer);
+        const displayMax = maxValue + rangeBuffer;
+        const displayRange = displayMax - displayMin;
+        
+        // Position the markers with better spacing
+        const originalPos = ((originalNumber - displayMin) / displayRange) * 100;
+        const guessPos = ((userGuess - displayMin) / displayRange) * 100;
+        const correctPos = ((correctAnswer - displayMin) / displayRange) * 100;
         
         // Set positions
         document.getElementById('original-marker').style.left = `${originalPos}%`;
