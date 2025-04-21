@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize game
     generateNewTarget();
     updateLabels();
-    drawTickMarks();
+    drawTickMarks(false); // Initialize without showing tick marks
     
     // Event listeners
     minInput.addEventListener('change', () => {
@@ -73,6 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
         correctMarker.style.display = 'block';
         correctMarker.style.left = `${correctPercentage * 100}%`;
         
+        // Now reveal the tick marks and halfway mark
+        drawTickMarks(true);
+        
         // Calculate accuracy and show results
         showResults(percentage, correctPercentage);
         
@@ -94,7 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateLabels() {
         minLabel.textContent = formatNumber(minValue);
         maxLabel.textContent = formatNumber(maxValue);
-        drawTickMarks();
+        // Only draw tick marks without labels when updating
+        drawTickMarks(hasGuessed);
     }
     
     function generateNewTarget() {
@@ -114,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return decimalsCheckbox.checked ? num.toFixed(1) : Math.floor(num);
     }
     
-    function drawTickMarks() {
+    function drawTickMarks(showLabels = false) {
         tickContainer.innerHTML = '';
         
         // Create 9 tick marks (dividing the line into 10 equal parts)
@@ -123,8 +127,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tick.className = 'tick-mark';
             tick.style.left = `${i * 10}%`;
             
-            // Add labels for the middle tick and quarter marks
-            if (i === 5) {
+            // Only show middle tick label if showLabels is true
+            if (i === 5 && showLabels) {
                 const label = document.createElement('div');
                 label.className = 'tick-label';
                 const middleValue = minValue + (maxValue - minValue) * 0.5;
@@ -132,10 +136,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 tick.appendChild(label);
                 tick.classList.add('major-tick');
             } else if (i === 2 || i === 7) {
+                // Make these medium ticks, but don't add labels
                 tick.classList.add('medium-tick');
             }
             
-            tickContainer.appendChild(tick);
+            // Only add the tick mark to the container if we're showing labels
+            // or if it's not the middle tick that would reveal information
+            if (showLabels || (i !== 5)) {
+                tickContainer.appendChild(tick);
+            }
         }
     }
     
@@ -180,6 +189,8 @@ document.addEventListener('DOMContentLoaded', () => {
         correctMarker.style.display = 'none';
         resultsDiv.style.display = 'none';
         hasGuessed = false;
+        // Reset tick marks to hide the labels
+        drawTickMarks(false);
     }
     
     function randomizeRange() {
