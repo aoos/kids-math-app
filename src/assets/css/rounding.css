@@ -148,3 +148,82 @@
     gap: 5px;
     cursor: pointer;
 }
+
+/* Updated number line visualization styles */
+.number-line-visualization {
+    margin: 20px 0;
+    padding: 20px 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    position: relative;
+}
+
+.number-line {
+    height: 2px;
+    background-color: #333;
+    position: relative;
+    margin: 40px 10px;
+}
+
+.number-marker {
+    position: absolute;
+    text-align: center;
+    transform: translateX(-50%);
+}
+
+.marker-line {
+    width: 2px;
+    height: 12px;
+    background-color: #333;
+    margin: 0 auto;
+}
+
+.marker-value {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Original number styling - above the line */
+.original-number {
+    top: -40px;
+    color: #333;
+}
+
+.original-number .marker-line {
+    position: relative;
+    top: 5px;
+}
+
+/* User guess styling - below the line */
+.user-guess {
+    top: 0;
+    color: #dc3545;
+}
+
+.user-guess .marker-line {
+    background-color: #dc3545;
+}
+
+/* Correct answer styling - below the line */
+.correct-answer {
+    top: 0;
+    color: #28a745;
+}
+
+.correct-answer .marker-line {
+    background-color: #28a745;
+}
+
+/* Difference styling */
+.difference {
+    font-size: 0.85rem;
+    margin-top: 3px;
+}
+
+#guess-diff {
+    color: #dc3545;
+}
+
+#correct-diff {
+    color: #28a745;
+}

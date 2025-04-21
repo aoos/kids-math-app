@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         userAnswerInput.focus();
         feedbackElement.textContent = '';
         feedbackElement.className = 'feedback';
+        document.getElementById('number-line-visualization').style.display = 'none';
     });
     
     userAnswerInput.addEventListener('keypress', (e) => {
@@ -109,13 +110,60 @@ document.addEventListener('DOMContentLoaded', () => {
             feedbackElement.textContent = 'Correct! Well done!';
             feedbackElement.className = 'feedback correct';
             correctCount++;
+            
+            // Hide number line if it was previously shown
+            document.getElementById('number-line-visualization').style.display = 'none';
         } else {
             feedbackElement.textContent = `Incorrect. The correct rounded value is ${correctAnswer.toLocaleString()}.`;
             feedbackElement.className = 'feedback incorrect';
+            
+            // Show number line visualization
+            showNumberLineVisualization(currentNumber, userAnswer, correctAnswer);
         }
         
         // Update stats
         updateStats();
+    }
+    
+    function showNumberLineVisualization(originalNumber, userGuess, correctAnswer) {
+        // Get the visualization elements
+        const vizContainer = document.getElementById('number-line-visualization');
+        const originalValueEl = document.getElementById('viz-original-value');
+        const guessValueEl = document.getElementById('viz-guess-value');
+        const correctValueEl = document.getElementById('viz-correct-value');
+        const guessDiffEl = document.getElementById('guess-diff');
+        const correctDiffEl = document.getElementById('correct-diff');
+        
+        // Set the values
+        originalValueEl.textContent = originalNumber.toLocaleString();
+        guessValueEl.textContent = userGuess.toLocaleString();
+        correctValueEl.textContent = correctAnswer.toLocaleString();
+        
+        // Calculate differences
+        const guessDiff = Math.abs(originalNumber - userGuess);
+        const correctDiff = Math.abs(originalNumber - correctAnswer);
+        
+        // Format differences in parentheses
+        guessDiffEl.textContent = `(${guessDiff.toLocaleString()})`;
+        correctDiffEl.textContent = `(${correctDiff.toLocaleString()})`;
+        
+        // Calculate positions for the markers
+        const min = Math.min(originalNumber, userGuess, correctAnswer) * 0.8;
+        const max = Math.max(originalNumber, userGuess, correctAnswer) * 1.2;
+        const range = max - min;
+        
+        // Position the markers
+        const originalPos = ((originalNumber - min) / range) * 100;
+        const guessPos = ((userGuess - min) / range) * 100;
+        const correctPos = ((correctAnswer - min) / range) * 100;
+        
+        // Set positions
+        document.getElementById('original-marker').style.left = `${originalPos}%`;
+        document.getElementById('guess-marker').style.left = `${guessPos}%`;
+        document.getElementById('correct-marker').style.left = `${correctPos}%`;
+        
+        // Show the visualization
+        vizContainer.style.display = 'block';
     }
     
     function updateStats() {

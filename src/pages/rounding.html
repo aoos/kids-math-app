@@ -32,6 +32,31 @@
             </div>
             
             <div id="feedback" class="feedback"></div>
+
+            <!-- Updated number line visualization -->
+            <div id="number-line-visualization" class="number-line-visualization" style="display: none;">
+                <div class="number-line">
+                    <!-- Original number marker (above the line) -->
+                    <div class="number-marker original-number" id="original-marker">
+                        <div class="marker-value" id="viz-original-value">3487</div>
+                        <div class="marker-line"></div>
+                    </div>
+                    
+                    <!-- User guess marker (below the line) -->
+                    <div class="number-marker user-guess" id="guess-marker">
+                        <div class="marker-line"></div>
+                        <div class="marker-value" id="viz-guess-value">3000</div>
+                        <div class="difference" id="guess-diff">(487)</div>
+                    </div>
+                    
+                    <!-- Correct answer marker (below the line) -->
+                    <div class="number-marker correct-answer" id="correct-marker">
+                        <div class="marker-line"></div>
+                        <div class="marker-value" id="viz-correct-value">3500</div>
+                        <div class="difference" id="correct-diff">(13)</div>
+                    </div>
+                </div>
+            </div>
             
             <div class="stats-container">
                 <div class="stats-grid">
