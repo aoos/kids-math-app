@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize game
     generateNewTarget();
     updateLabels();
-    drawTickMarks(false); // Initialize without showing tick marks
+    drawTickMarks(false); // Don't show any tick marks initially
     
     // Event listeners
     minInput.addEventListener('change', () => {
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         correctMarker.style.display = 'block';
         correctMarker.style.left = `${correctPercentage * 100}%`;
         
-        // Now reveal the tick marks and halfway mark
+        // Now reveal all tick marks
         drawTickMarks(true);
         
         // Calculate accuracy and show results
@@ -97,8 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateLabels() {
         minLabel.textContent = formatNumber(minValue);
         maxLabel.textContent = formatNumber(maxValue);
-        // Only draw tick marks without labels when updating
-        drawTickMarks(hasGuessed);
+        drawTickMarks(hasGuessed); // Only show tick marks if user has guessed
     }
     
     function generateNewTarget() {
@@ -118,8 +117,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return decimalsCheckbox.checked ? num.toFixed(1) : Math.floor(num);
     }
     
-    function drawTickMarks(showLabels = false) {
+    function drawTickMarks(showTicks = false) {
         tickContainer.innerHTML = '';
+        
+        // Only draw tick marks if showTicks is true
+        if (!showTicks) return;
         
         // Create 9 tick marks (dividing the line into 10 equal parts)
         for (let i = 1; i <= 9; i++) {
@@ -127,8 +129,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tick.className = 'tick-mark';
             tick.style.left = `${i * 10}%`;
             
-            // Only show middle tick label if showLabels is true
-            if (i === 5 && showLabels) {
+            // Add labels for the middle tick and quarter marks
+            if (i === 5) {
                 const label = document.createElement('div');
                 label.className = 'tick-label';
                 const middleValue = minValue + (maxValue - minValue) * 0.5;
@@ -136,15 +138,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 tick.appendChild(label);
                 tick.classList.add('major-tick');
             } else if (i === 2 || i === 7) {
-                // Make these medium ticks, but don't add labels
                 tick.classList.add('medium-tick');
             }
             
-            // Only add the tick mark to the container if we're showing labels
-            // or if it's not the middle tick that would reveal information
-            if (showLabels || (i !== 5)) {
-                tickContainer.appendChild(tick);
-            }
+            tickContainer.appendChild(tick);
         }
     }
     
@@ -189,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
         correctMarker.style.display = 'none';
         resultsDiv.style.display = 'none';
         hasGuessed = false;
-        // Reset tick marks to hide the labels
+        // Hide all tick marks
         drawTickMarks(false);
     }
     
