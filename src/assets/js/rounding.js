@@ -27,7 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
     userAnswerInput.focus();
     
     // Event listeners
-    checkAnswerButton.addEventListener('click', checkAnswer);
+    checkAnswerButton.addEventListener('click', () => {
+        checkAnswer();
+        // Hide check button, show next button
+        checkAnswerButton.style.display = 'none';
+        nextNumberButton.style.display = 'inline-block';
+    });
+
     nextNumberButton.addEventListener('click', () => {
         generateNewNumber();
         userAnswerInput.value = '';
@@ -35,11 +41,28 @@ document.addEventListener('DOMContentLoaded', () => {
         feedbackElement.textContent = '';
         feedbackElement.className = 'feedback';
         document.getElementById('number-line-visualization').style.display = 'none';
+        
+        // Hide next button, show check button
+        nextNumberButton.style.display = 'none';
+        checkAnswerButton.style.display = 'inline-block';
     });
-    
+
+    // Remove the keypress handler that automatically checks answer on Enter
+    // This would bypass our button visibility logic
+    userAnswerInput.removeEventListener('keypress', null);
+
+    // Add a new keypress handler that respects button visibility
     userAnswerInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
-            checkAnswer();
+            if (checkAnswerButton.style.display !== 'none') {
+                // If check button is visible, trigger check
+                checkAnswer();
+                checkAnswerButton.style.display = 'none';
+                nextNumberButton.style.display = 'inline-block';
+            } else if (nextNumberButton.style.display !== 'none') {
+                // If next button is visible, go to next problem
+                nextNumberButton.click();
+            }
         }
     });
     
