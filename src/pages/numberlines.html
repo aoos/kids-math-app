@@ -6,24 +6,34 @@
     <title>Number Lines</title>
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/css/numberlines.css">
+    <!-- Add Font Awesome for the home icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <div class="container">
+        <!-- Add home icon in top-left -->
+        <div class="home-icon-container">
+            <a href="../index.html" class="home-icon" title="Return to Home">
+                <i class="fas fa-home"></i>
+            </a>
+        </div>
+        
         <h1>Number Lines Game</h1>
         
         <div class="settings">
-            <div class="range-controls">
-                <label>Min: <input type="number" id="min-value" value="0"></label>
-                <label>Max: <input type="number" id="max-value" value="100"></label>
-            </div>
             <div class="option-controls">
-                <label><input type="checkbox" id="randomize"> Randomize after each guess</label>
-                <label><input type="checkbox" id="decimals"> Use decimals</label>
+                <label><input type="checkbox" id="randomize"> Randomize</label>
+                <label><input type="checkbox" id="decimals"> Decimals</label>
+                <label><input type="checkbox" id="negatives"> Negatives</label>
             </div>
         </div>
         
         <div id="game-container">
-            <h2>Find where <span id="target-number">50</span> goes on the line</h2>
+            <!-- Revised layout for prompt and next button -->
+            <div class="prompt-container">
+                <h2>Where does this number go? <span id="target-number">50</span></h2>
+                <button id="next-number" class="next-button">Next Number</button>
+            </div>
             
             <div id="number-line-container">
                 <div id="number-line-labels">
@@ -40,9 +50,6 @@
                 <div id="stars"></div>
                 <div id="accuracy"></div>
             </div>
-            
-            <button id="next-number">Next Number</button>
-            <button id="home-button" onclick="location.href='../index.html'">Return to Home</button>
         </div>
     </div>
     

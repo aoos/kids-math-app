@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     // DOM elements
-    const minInput = document.getElementById('min-value');
-    const maxInput = document.getElementById('max-value');
     const minLabel = document.getElementById('min-label');
     const maxLabel = document.getElementById('max-label');
     const randomizeCheckbox = document.getElementById('randomize');
     const decimalsCheckbox = document.getElementById('decimals');
+    const negativesCheckbox = document.getElementById('negatives');
     const targetNumberElement = document.getElementById('target-number');
     const numberLine = document.getElementById('number-line');
     const userMarker = document.getElementById('user-marker');
@@ -15,7 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const accuracyDiv = document.getElementById('accuracy');
     const nextButton = document.getElementById('next-number');
     const tickContainer = document.getElementById('tick-marks');
-    const homeButton = document.getElementById('home-button');
+    
+    // Replace the static labels with input fields
+    minLabel.innerHTML = `<input type="number" id="min-value" value="0">`;
+    maxLabel.innerHTML = `<input type="number" id="max-value" value="100">`;
+    
+    // Get references to the new input fields
+    const minInput = document.getElementById('min-value');
+    const maxInput = document.getElementById('max-value');
     
     // Game state
     let minValue = parseInt(minInput.value, 10);
@@ -32,44 +38,46 @@ document.addEventListener('DOMContentLoaded', () => {
     const statsDiv = document.createElement('div');
     statsDiv.className = 'stats-container';
     statsDiv.innerHTML = `
-        <h3>Your Statistics</h3>
-        <div id="guesses-count">Number of guesses: 0</div>
-        <div id="average-percentage">Average % off: 0%</div>
-        <div id="closest-guess">Closest guess: N/A</div>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-title">Guesses</div>
+                <div id="guesses-count" class="stat-value">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-title">Average</div>
+                <div id="average-percentage" class="stat-value">0%</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-title">Closest</div>
+                <div id="closest-guess" class="stat-value">N/A</div>
+            </div>
+        </div>
     `;
     document.querySelector('.container').appendChild(statsDiv);
     
-    // Get references to stats elements
-    const guessesCountElement = document.getElementById('guesses-count');
-    const averagePercentageElement = document.getElementById('average-percentage');
-    const closestGuessElement = document.getElementById('closest-guess');
-    
     // Initialize game
     generateNewTarget();
-    updateLabels();
     drawTickMarks(false); // Don't show any tick marks initially
     
     // Event listeners
     minInput.addEventListener('change', () => {
         minValue = parseFloat(minInput.value);
-        updateLabels();
         if (minValue >= maxValue) {
             maxInput.value = minValue + 10;
             maxValue = minValue + 10;
-            updateLabels();
         }
         generateNewTarget();
+        drawTickMarks(hasGuessed);
     });
     
     maxInput.addEventListener('change', () => {
         maxValue = parseFloat(maxInput.value);
-        updateLabels();
         if (maxValue <= minValue) {
             minInput.value = maxValue - 10;
             minValue = maxValue - 10;
-            updateLabels();
         }
         generateNewTarget();
+        drawTickMarks(hasGuessed);
     });
     
     decimalsCheckbox.addEventListener('change', generateNewTarget);
@@ -118,14 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
         resetGame();
     });
     
-    homeButton.addEventListener('click', () => {
-        window.location.href = '../index.html';  // Change from '/' to '../index.html'
-    });
-    
     function updateLabels() {
-        minLabel.textContent = formatNumber(minValue);
-        maxLabel.textContent = formatNumber(maxValue);
-        drawTickMarks(hasGuessed); // Only show tick marks if user has guessed
+        // Don't update the input values here as they're directly editable
+        drawTickMarks(hasGuessed);
     }
     
     function generateNewTarget() {
@@ -215,9 +218,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function updateStats() {
-        guessesCountElement.textContent = `Number of guesses: ${totalGuesses}`;
-        averagePercentageElement.textContent = `Average % off: ${(totalPercentageOff / totalGuesses).toFixed(1)}%`;
-        closestGuessElement.textContent = `Closest guess: ${closestGuessPercentage.toFixed(1)}%`;
+        document.getElementById('guesses-count').textContent = totalGuesses;
+        document.getElementById('average-percentage').textContent = 
+            (totalGuesses > 0) ? `${(totalPercentageOff / totalGuesses).toFixed(1)}%` : '0%';
+        document.getElementById('closest-guess').textContent = 
+            (closestGuessPercentage < 100) ? `${closestGuessPercentage.toFixed(1)}%` : 'N/A';
     }
     
     function resetGame() {
@@ -230,8 +235,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function randomizeRange() {
-        // Generate random range (min between -100 and 100, max is min + 20 to min + 200)
-        const newMin = Math.floor(Math.random() * 200) - 100;
+        // Generate random range respecting the negatives checkbox
+        let newMin;
+        if (negativesCheckbox.checked) {
+            // Allow negative minimum values if negatives checkbox is checked
+            newMin = Math.floor(Math.random() * 200) - 100;
+        } else {
+            // Only positive minimum values if negatives checkbox is not checked
+            newMin = Math.floor(Math.random() * 100);
+        }
+        
         const rangeSize = Math.floor(Math.random() * 180) + 20; // Range between 20 and 200
         const newMax = newMin + rangeSize;
         
@@ -239,6 +252,6 @@ document.addEventListener('DOMContentLoaded', () => {
         maxInput.value = newMax;
         minValue = newMin;
         maxValue = newMax;
-        updateLabels();
+        drawTickMarks(hasGuessed);
     }
 });
