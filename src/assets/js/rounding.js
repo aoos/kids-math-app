@@ -104,23 +104,35 @@ document.addEventListener('DOMContentLoaded', () => {
         // Display the number with comma formatting
         targetNumberElement.textContent = currentNumber.toLocaleString();
         
-        // Calculate the correct rounded answer
-        correctAnswer = calculateRoundedAnswer(currentNumber, numDigits);
-        
         // Calculate how many significant digits we expect and how many zeros to display
-        expectedSignificantDigits = (numDigits <= 3) ? 1 : 2;
-        trailingZerosCount = numDigits - expectedSignificantDigits;
+        if (numDigits <= 2) {
+            // Special case for 2-digit numbers - no rounding to single digit with zeroes
+            expectedSignificantDigits = numDigits;
+            trailingZerosCount = 0;
+        } else {
+            // For 3+ digit numbers use our normal rules
+            expectedSignificantDigits = (numDigits <= 3) ? 1 : 2;
+            trailingZerosCount = numDigits - expectedSignificantDigits;
+        }
+        
+        // Calculate the correct rounded answer based on expected digits
+        correctAnswer = calculateRoundedAnswer(currentNumber, numDigits);
         
         // Update trailing zeros display
         updateTrailingZerosDisplay();
         
         // Update input field size based on expected digits
-        userAnswerInput.setAttribute('placeholder', expectedSignificantDigits === 1 ? 'X' : 'XX');
-        userAnswerInput.style.width = (expectedSignificantDigits * 20) + 'px';
+        userAnswerInput.setAttribute('placeholder', '#');
+        userAnswerInput.style.width = (expectedSignificantDigits * 18 + 10) + 'px'; 
     }
     
     function calculateRoundedAnswer(number, numDigits) {
-        // For numbers with 2-3 digits, round to 1 significant digit
+        // For 2-digit numbers, don't round
+        if (numDigits <= 2) {
+            return number;
+        }
+        
+        // For numbers with 3 digits, round to 1 significant digit
         // For numbers with 4-6 digits, round to 2 significant digits
         let sigDigits = (numDigits <= 3) ? 1 : 2;
         
