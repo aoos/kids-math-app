@@ -1,8 +1,8 @@
 // Import storage utilities first
 import './storage-utils.js';
 
-const mathProblems = require('./mathProblems');
-const uiController = require('./uiController');
+import mathProblems from './mathProblems.js';
+import uiController from './uiController.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const subjectSelect = document.getElementById('subject-select');
@@ -31,11 +31,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         answerInput.value = '';
     });
+
+    // Ensure StorageWithTTL is properly initialized
+    if (typeof window.storageWithTTL === 'undefined') {
+        console.warn('StorageWithTTL not found, initializing default implementation');
+        // Create a fallback implementation if not already defined
+        window.storageWithTTL = new (function() {
+            this.getWithTTL = function(key) {
+                return localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)) : null;
+            };
+            this.setWithTTL = function(key, value) {
+                localStorage.setItem(key, JSON.stringify(value));
+            };
+            this.removeItem = function(key) {
+                localStorage.removeItem(key);
+            };
+        })();
+    }
+
+    // Initialize any other components
 });
 
 // Make sure ShowOneChild can access the storage
-if (typeof ShowOneChild !== 'undefined') {
-    ShowOneChild.prototype.getStorage = function() {
+if (typeof window.ShowOneChild !== 'undefined') {
+    window.ShowOneChild.prototype.getStorage = function() {
         return window.storageWithTTL;
     };
 }

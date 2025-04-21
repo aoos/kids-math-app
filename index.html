@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kids-math-app</title>
-    <!-- Make sure all paths are correctly relative -->
-    <link rel="stylesheet" href="./css/styles.css">
+    <!-- Add base tag to ensure proper path resolution -->
+    <base href="/kids-math-app/">
+    <!-- Add redirect meta tag -->
+    <meta http-equiv="refresh" content="0;url=./src/index.html">
 </head>
 <body>
     <div id="app">
-        <!-- Your app content here -->
+        <p>Redirecting to the app...</p>
+        <p>If you are not redirected, <a href="./src/index.html">click here</a>.</p>
     </div>
-    
-    <!-- Ensure script paths are correct -->
-    <script src="./js/app.js"></script>
 </body>
 </html>

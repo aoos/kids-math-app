@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     homeButton.addEventListener('click', () => {
-        window.location.href = '/';
+        window.location.href = '../index.html';  // Change from '/' to '../index.html'
     });
     
     function updateLabels() {

@@ -1,8 +1,8 @@
 /**
- * Enhanced localStorage with TTL support
+ * Enhanced localStorage with TTL (Time To Live) functionality
  */
 class StorageWithTTL {
-    constructor(storage = localStorage) {
+    constructor(storage = window.localStorage) {
         this.storage = storage;
     }
 
@@ -10,7 +10,7 @@ class StorageWithTTL {
      * Set item with optional expiration time
      * @param {string} key - Storage key
      * @param {*} value - Value to store
-     * @param {number} ttl - Time to live in milliseconds
+     * @param {number} ttl - Time to live in milliseconds (optional)
      */
     setWithTTL(key, value, ttl = null) {
         const item = {
@@ -40,7 +40,15 @@ class StorageWithTTL {
             return null;
         }
     }
+    
+    /**
+     * Remove item from storage
+     * @param {string} key - Storage key
+     */
+    removeItem(key) {
+        this.storage.removeItem(key);
+    }
 }
 
-// Initialize and attach to window for global use
-window.storageWithTTL = new StorageWithTTL(localStorage);
+// Create global instance
+window.storageWithTTL = new StorageWithTTL();

@@ -8,7 +8,7 @@
     "dev": "npx live-server src",
     "build": "echo 'Build step not defined'"
   },
-  "homepage": "https://yourusername.github.io/kids-math-app",
+  "homepage": "https://aoos.github.io/kids-math-app",
   "keywords": [
     "math",
     "education",
