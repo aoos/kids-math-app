@@ -34,6 +34,21 @@ class BaseGame {
      * Create the statistics container
      */
     createStatsContainer() {
+        // Check if a stats container already exists
+        const existingStatsContainer = this.container.querySelector('.stats-container');
+        
+        if (existingStatsContainer) {
+            // Use the existing container, but ensure IDs match our expected format
+            const statValues = existingStatsContainer.querySelectorAll('.stat-value');
+            if (statValues.length >= 3) {
+                statValues[0].id = `${this.gameType}-stat-1`;
+                statValues[1].id = `${this.gameType}-stat-2`;
+                statValues[2].id = `${this.gameType}-stat-3`;
+            }
+            return;
+        }
+        
+        // Create new stats container if one doesn't exist
         const statsDiv = document.createElement('div');
         statsDiv.className = 'stats-container';
         statsDiv.innerHTML = `

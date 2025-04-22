@@ -41,6 +41,11 @@ class RoundingGame extends BaseGame {
         this.trailingZerosElement = document.getElementById('trailing-zeros');
         this.numberLineVisualization = document.getElementById('number-line-visualization');
         
+        // Connect to the static stats elements if they exist
+        this.questionsCountElement = document.getElementById('questions-count');
+        this.correctCountElement = document.getElementById('correct-count');
+        this.accuracyElement = document.getElementById('accuracy-percentage');
+        
         // Get difficulty checkbox references
         this.difficultyCheckboxes = {
             double: document.getElementById('double-digits'),
@@ -193,7 +198,27 @@ class RoundingGame extends BaseGame {
         }
         
         // Update stats
+        this.updateStats(isCorrect);
+    }
+
+    updateStats(isCorrect) {
+        // Call the parent method first (updates the framework's stat elements)
         super.updateStats(isCorrect);
+        
+        // Also update the static elements if they exist
+        if (this.questionsCountElement) {
+            this.questionsCountElement.textContent = this.stats.attempts;
+        }
+        
+        if (this.correctCountElement) {
+            this.correctCountElement.textContent = this.stats.correct;
+        }
+        
+        if (this.accuracyElement) {
+            const accuracy = this.stats.attempts > 0 ? 
+                Math.round((this.stats.correct / this.stats.attempts) * 100) : 0;
+            this.accuracyElement.textContent = `${accuracy}%`;
+        }
     }
 
     showNumberLineVisualization(originalNumber, userGuess, correctAnswer) {

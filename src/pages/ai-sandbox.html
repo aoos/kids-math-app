@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Module Generator</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/framework/game-framework.css">
+    <link rel="stylesheet" href="../assets/css/ai-sandbox.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Home icon -->
+        <div class="home-icon-container">
+            <a href="../index.html" class="home-icon" title="Return to Home">
+                <i class="fas fa-home"></i>
+            </a>
+        </div>
+        
+        <h1>AI Learning Module Generator</h1>
+        
+        <div class="sandbox-container">
+            <!-- Module request form -->
+            <div id="module-request-form" class="panel">
+                <h2>Create a Custom Learning Module</h2>
+                <div class="form-group">
+                    <label for="module-type">Module Type:</label>
+                    <select id="module-type">
+                        <option value="math-practice">Math Practice</option>
+                        <option value="number-sense">Number Sense</option>
+                        <option value="word-problems">Word Problems</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="difficulty-level">Difficulty Level:</label>
+                    <select id="difficulty-level">
+                        <option value="beginner">Beginner (Ages 5-7)</option>
+                        <option value="intermediate" selected>Intermediate (Ages 8-10)</option>
+                        <option value="advanced">Advanced (Ages 11-13)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="module-description">Describe what you want:</label>
+                    <textarea id="module-description" rows="5" placeholder="Example: Create a module that helps practice rounding numbers to the nearest thousand with visual feedback"></textarea>
+                </div>
+                
+                <div class="form-controls">
+                    <button id="generate-module" class="game-button">Generate Module</button>
+                </div>
+                
+                <div id="generation-status" class="status-message"></div>
+            </div>
+            
+            <!-- Module preview -->
+            <div id="module-preview" class="panel" style="display: none;">
+                <h2>Module Preview</h2>
+                <div id="preview-content"></div>
+                
+                <div class="form-controls">
+                    <button id="edit-module" class="game-button secondary">Edit</button>
+                    <button id="save-module" class="game-button">Save Module</button>
+                    <button id="try-module" class="game-button primary">Try It Now</button>
+                </div>
+            </div>
+            
+            <!-- Saved modules -->
+            <div id="saved-modules" class="panel">
+                <h2>My Saved Modules</h2>
+                <div id="modules-list" class="modules-grid">
+                    <!-- Modules will be inserted here by JavaScript -->
+                    <div class="no-modules-message">No saved modules yet</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="../assets/js/ai-sandbox.js"></script>
+</body>
+</html>

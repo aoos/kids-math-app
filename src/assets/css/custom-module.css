@@ -1,0 +1,124 @@
+/* Custom Module Styles */
+
+#module-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.instruction-panel {
+    background-color: #f9f9f9;
+    border-left: 4px solid #28a745;
+    padding: 15px;
+    border-radius: 0 5px 5px 0;
+}
+
+.problem-panel {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.problem-text {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.input-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.user-answer {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.feedback {
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 4px;
+    min-height: 20px;
+}
+
+.feedback.correct {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.feedback.incorrect {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.explanation {
+    background-color: #e2f0ff;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.progress-container {
+    margin-top: 20px;
+}
+
+.progress-text {
+    margin-bottom: 5px;
+}
+
+.progress-bar {
+    height: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #28a745;
+    transition: width 0.3s ease;
+}
+
+#completion-message {
+    text-align: center;
+    margin: 30px 0;
+    padding: 20px;
+    background-color: #d4edda;
+    border-radius: 8px;
+}
+
+.completion-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+/* Hint system styles */
+.hint-container {
+    margin-top: 15px;
+}
+
+.hint-toggle {
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+}
+
+.hint-content {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #fffbea;
+    border-left: 3px solid #ffc107;
+    display: none;
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Module</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/framework/game-framework.css">
+    <link rel="stylesheet" href="../assets/css/custom-module.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Home icon -->
+        <div class="home-icon-container">
+            <a href="../index.html" class="home-icon" title="Return to Home">
+                <i class="fas fa-home"></i>
+            </a>
+        </div>
+        
+        <h1 id="module-title">Custom Learning Module</h1>
+        
+        <div id="module-container">
+            <div id="module-instructions" class="instruction-panel"></div>
+            
+            <div id="problem-container" class="problem-panel">
+                <div id="problem-text" class="problem-text"></div>
+                
+                <div id="input-container" class="input-container">
+                    <input type="text" id="user-answer" class="user-answer" placeholder="Your answer...">
+                    <button id="check-button" class="game-button">Check</button>
+                    <button id="next-button" class="game-button" style="display: none;">Next</button>
+                </div>
+                
+                <div id="feedback" class="feedback"></div>
+                <div id="explanation" class="explanation" style="display: none;"></div>
+            </div>
+            
+            <div id="progress-container" class="progress-container">
+                <div class="progress-text">Progress: <span id="progress-count">0/0</span></div>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="completion-message" style="display: none;">
+            <h2>Great job!</h2>
+            <p>You've completed this module.</p>
+            <div class="completion-buttons">
+                <button id="restart-button" class="game-button secondary">Start Over</button>
+                <button id="back-to-sandbox-button" class="game-button">Back to Sandbox</button>
+            </div>
+        </div>
+        
+        <div class="stats-container">
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-title">Completed</div>
+                    <div id="completed-count" class="stat-value">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-title">Correct</div>
+                    <div id="correct-count" class="stat-value">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-title">Accuracy</div>
+                    <div id="accuracy-percentage" class="stat-value">0%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="../assets/js/custom-module.js"></script>
+</body>
+</html>

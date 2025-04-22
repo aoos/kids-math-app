@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Check if we're already using the framework version
+    if (window.currentGame) {
+        console.log('Framework version of RoundingGame is active. Skipping standalone initialization.');
+        return;
+    }
+
     // DOM elements
     const targetNumberElement = document.getElementById('target-number');
     const userAnswerInput = document.getElementById('user-answer');
